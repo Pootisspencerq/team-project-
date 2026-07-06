@@ -1,0 +1,156 @@
+/* Базовые настройки */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #0f0f12;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Навигация (как ты просил) */
+.navbar { 
+    padding: 20px; 
+}
+.menu { 
+    display: flex; list-style: none; gap: 20px; 
+}
+.menu a { 
+    color: #a0a0a0; text-decoration: none; transition: 0.3s; 
+}
+.menu a:hover { 
+    color: #ffffff; 
+}
+
+.lang-dropdown { 
+    position: relative; 
+    cursor: pointer; 
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #1e1e24;
+    padding: 10px;
+    border-radius: 8px;
+    list-style: none;
+    z-index: 999;
+}
+
+.lang-dropdown:hover .dropdown-menu { 
+    display: block; 
+}
+
+.dropdown-menu li { 
+    padding: 5px 10px; 
+    color: #fff; 
+}
+
+.dropdown-menu li:hover { 
+    background: #333; 
+}
+
+/* Основная часть (Main) */
+main { 
+    flex: 1; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px; 
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    
+    /* текст градиентный */
+    background: linear-gradient(90deg, #3b82f6, #db2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; 
+}
+
+/* Окно скачивания */
+.download-section { 
+    text-align: center; 
+    max-width: 600px; 
+    width: 100%; 
+    background: #1a1a24;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #333;
+}
+
+.sub-title{
+    display: block; 
+    margin-top: 15px; /* Это отодвинет текст от поля ввода и кнопки */
+    color: #817d7d; 
+    font-size: 0.8em;
+}
+
+input {
+    width: 65%;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #0f0f12;
+    color: white;
+    margin-right: 5px;
+    outline: none;
+}
+
+/* Кнопка */
+button {
+    padding: 15px 25px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(90deg, #3b82f6, #db2777);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover { 
+    opacity: 0.9; 
+}
+
+/* Футер */
+footer { 
+    padding: 35px 20px;
+    text-align: center; 
+    font-size: 0.8em; 
+    color: #666; 
+}
+
+.footer-links a { 
+    color: #888; 
+    text-decoration: none;
+    margin: 0 5px; 
+}
+
+/* How to download */
+.examples-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: #1e1e24;
+    border-radius: 12px;
+    font-size: 0.9em;
+    text-align: left;
+    margin-left: 30px;
+}
+
+.examples-section p {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.examples-list {
+    color: #a0a0a0;
+    padding-left: 20px;
+    word-break: break-all;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>SnapTik</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul class="menu">
+                <li id="nav-home"><a href="index.html">Home</a></li>
+                <li id="nav-how-to"><a href="how-to-download.html">How to download</a></li>
+                <li class="lang-dropdown" id="nav-languages">
+                    <a href="#">Languages ▾</a>
+                    <ul class="dropdown-menu">
+                        <li onclick="setLanguage('ru')">Русский</li>
+                        <li onclick="setLanguage('uk')">Українська</li>
+                        <li onclick="setLanguage('en')">English</li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+<main>
+    <div class="download-section">
+        <h1 id="title" >SnapTik Video Downloader</h1>
+        <p id="description" >Вставьте ссылку на видео TikTok ниже, чтобы скачать его без водяных знаков</p>
+        
+        <input type="text" class="links-paste" placeholder="https://vm.tiktok.com/ZNRKGYrdw/" aria-label="Вставьте ссылку">
+        <button type="button" id="button-download" >Скачать</button>
+        
+        <i class="sub-title" id="sub-title" >Нажимая кнопку <span>Скачать</span>, вы соглашаетесь с нашими правилами.</i>
+    </div>
+</main>
+<footer>
+    <div class="footer-content">
+        <p id="prava">&copy; 2026 SnapTik. Все права защищены.</p>
+        <nav class="footer-links">
+            <a href="#" id="users-confirm">Пользовательское соглашение</a> | 
+            <a href="#" id="politics">Политика конфиденциальности</a> | 
+            <a href="https://t.me/SnapTik_Robot" target="_blank" id="telegram" >Telegram-бот</a> |
+        </nav>
+    </div>
+</footer>
+</body>
+<script src="js/script.js"></script>
+<script src="js/api.js"></script>
+</html>
