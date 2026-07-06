@@ -1,49 +1,59 @@
-const API_KEY = "YOUR_API_KEY";
+const API_KEY = "8d01732a80fc4398c695de574494d8c7";
 
 const input = document.getElementById("searchInput");
 const button = document.getElementById("searchBtn");
-const games = document.getElementById("games");
+const movies = document.getElementById("movies"); // You can rename this to "movies"
 
-button.addEventListener("click", searchGames);
+button.addEventListener("click", searchMovies);
 
 input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-        searchGames();
+        searchMovies();
     }
 });
 
-function searchGames() {
-
+async function searchMovies() {
     const search = input.value.trim();
 
     if (!search) return;
 
-    fetch(`https://api.rawg.io/api/games?search=${encodeURIComponent(search)}&key=${API_KEY}`)
-        .then(response => response.json())
-        .then(data => {
+    movies.innerHTML = "<p>Loading...</p>";
 
-            games.innerHTML = "";
+    try {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(search)}`
 
-            if (data.results.length === 0) {
-                games.innerHTML = "<h2>Нічого не знайдено.</h2>";
-                return;
-            }
+        );
 
-            data.results.forEach(game => {
+        const data = await response.json();
 
-                games.innerHTML += `
-                    <div class="card">
-                        <img src="${game.background_image}" alt="${game.name}">
-                        <div class="info">
-                            <h2>${game.name}</h2>
-                            <p>⭐ Рейтинг: ${game.rating}</p>
-                            <p>📅 Вихід: ${game.released}</p>
-                        </div>
+        movies.innerHTML = "";
+
+        if (!data.results || data.results.length === 0) {
+            movies.innerHTML = "<h2>No movies found.</h2>";
+            return;
+        }
+
+        data.results.forEach(movie => {
+            const poster = movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : "https://via.placeholder.com/500x750?text=No+Image";
+
+            movies.innerHTML += `
+                <div class="card">
+                    <img src="${poster}" alt="${movie.title}">
+                    <div class="info">
+                        <h2>${movie.title}</h2>
+                        <p>⭐ Rating: ${movie.vote_average}</p>
+                        <p>📅 Release: ${movie.release_date || "Unknown"}</p>
+                        <p>${movie.overview || "No description available."}</p>
                     </div>
-                `;
+                </div>
+            `;
+        });
 
-            });
-
-        })
-        .catch(error => console.error(error));
+    } catch (error) {
+        console.error(error);
+        movies.innerHTML = "<h2>Something went wrong.</h2>";
+    }
 }
