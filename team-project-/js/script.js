@@ -56,7 +56,26 @@ function setLanguage(lang) {
 }
 
 // При загрузке страницы
-document.addEventListener("DOMContentLoaded", () => {
-    const savedLang = localStorage.getItem("lang") || "ru";
-    setLanguage(savedLang);
+document.getElementById("button-download").addEventListener("click", async () => {
+    const tiktokUrl = document.querySelector(".links-paste").value.trim();
+
+    const response = await fetch(
+        `https://api.tikwmapi.com/?url=${encodeURIComponent(tiktokUrl)}&hd=1`,
+        {
+            method: "GET",
+            headers: {
+                "x-tikwmapi-key": API.key
+            }
+        }
+    );
+
+    const result = await response.json();
+
+    console.log(result);
+
+    if (result.code === 0) {
+        const videoUrl = result.data.hdplay || result.data.play;
+
+        window.open(videoUrl, "_blank");
+    }
 });
