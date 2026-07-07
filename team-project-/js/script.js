@@ -65,13 +65,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!tiktokUrl) return;
 
-        const result = await API.getVideo(tiktokUrl);
+        document.getElementById("loader").style.display = "flex";
 
-        console.log(result);
+        try {
+            const result = await API.getVideo(tiktokUrl);
 
-        if (result.code === 0) {
-            const videoUrl = result.data.hdplay || result.data.play;
-            window.open(videoUrl, "_blank");
+            console.log(result);
+
+            if (result.code === 0) {
+                const response = await fetch(
+                    `http://127.0.0.1:3000/download?url=${encodeURIComponent(tiktokUrl)}`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Download failed");
+                }
+
+                const blob = await response.blob();
+
+                document.getElementById("loader").style.display = "none";
+
+                const downloadUrl = URL.createObjectURL(blob);
+
+                const a = document.createElement("a");
+                a.href = downloadUrl;
+                a.download = "tiktok-video.mp4";
+
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                URL.revokeObjectURL(downloadUrl);
+            } else {
+                document.getElementById("loader").style.display = "none";
+                alert("Помилка отримання відео");
+            }
+        } catch (error) {
+            document.getElementById("loader").style.display = "none";
+            console.error(error);
+            alert("Сталася помилка");
         }
     });
 });
