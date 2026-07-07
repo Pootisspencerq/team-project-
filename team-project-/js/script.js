@@ -43,39 +43,35 @@ const translations = {
 function setLanguage(lang) {
     for (let id in translations[lang]) {
         const element = document.getElementById(id);
+
         if (element) {
-            // Если внутри элемента есть ссылка (как в меню), меняем текст только у текстового узла
-            if (element.tagName === 'LI' && element.querySelector('a')) {
-                element.querySelector('a').innerText = translations[lang][id];
+            if (element.tagName === "LI" && element.querySelector("a")) {
+                element.querySelector("a").innerText = translations[lang][id];
             } else {
                 element.innerText = translations[lang][id];
             }
         }
     }
+
     localStorage.setItem("lang", lang);
 }
 
-// При загрузке страницы
-document.getElementById("button-download").addEventListener("click", async () => {
-    const tiktokUrl = document.querySelector(".links-paste").value.trim();
+document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("lang") || "ru";
+    setLanguage(savedLang);
 
-    const response = await fetch(
-        `https://api.tikwmapi.com/?url=${encodeURIComponent(tiktokUrl)}&hd=1`,
-        {
-            method: "GET",
-            headers: {
-                "x-tikwmapi-key": API.key
-            }
+    document.getElementById("button-download").addEventListener("click", async () => {
+        const tiktokUrl = document.querySelector(".links-paste").value.trim();
+
+        if (!tiktokUrl) return;
+
+        const result = await API.getVideo(tiktokUrl);
+
+        console.log(result);
+
+        if (result.code === 0) {
+            const videoUrl = result.data.hdplay || result.data.play;
+            window.open(videoUrl, "_blank");
         }
-    );
-
-    const result = await response.json();
-
-    console.log(result);
-
-    if (result.code === 0) {
-        const videoUrl = result.data.hdplay || result.data.play;
-
-        window.open(videoUrl, "_blank");
-    }
+    });
 });
