@@ -7,25 +7,37 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* Навигация (как ты просил) */
-.navbar { 
-    padding: 20px; 
-}
-.menu { 
-    display: flex; list-style: none; gap: 20px; 
-}
-.menu a { 
-    color: #a0a0a0; text-decoration: none; transition: 0.3s; 
-}
-.menu a:hover { 
-    color: #ffffff; 
+/* Навигация */
+.navbar {
+    padding: 20px;
 }
 
-.lang-dropdown { 
-    position: relative; 
-    cursor: pointer; 
+.menu {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.menu a {
+    color: #a0a0a0;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    color: #ffffff;
+}
+
+.lang-dropdown {
+    position: relative;
+    cursor: pointer;
 }
 
 .dropdown-menu {
@@ -40,71 +52,75 @@ body {
     z-index: 999;
 }
 
-.lang-dropdown:hover .dropdown-menu { 
-    display: block; 
+.lang-dropdown:hover .dropdown-menu {
+    display: block;
 }
 
-.dropdown-menu li { 
-    padding: 5px 10px; 
-    color: #fff; 
+.dropdown-menu li {
+    padding: 5px 10px;
+    color: #fff;
 }
 
-.dropdown-menu li:hover { 
-    background: #333; 
+.dropdown-menu li:hover {
+    background: #333;
 }
 
-/* Основная часть (Main) */
-main { 
-    flex: 1; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    padding: 20px; 
+/* Main */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
 h1 {
     font-size: 2rem;
     margin-bottom: 10px;
-    
-    /* текст градиентный */
     background: linear-gradient(90deg, #3b82f6, #db2777);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent; 
+    color: transparent;
 }
 
-/* Окно скачивания */
-.download-section { 
-    text-align: center; 
-    max-width: 600px; 
-    width: 100%; 
-    background: #1a1a24;
+/* Карточка */
+.download-section {
+    width: 100%;
+    max-width: 600px;
     padding: 30px;
-    border-radius: 16px;
+    background: #1a1a24;
     border: 1px solid #333;
+    border-radius: 16px;
+    text-align: center;
+    box-sizing: border-box;
 }
 
-.sub-title{
-    display: block; 
-    margin-top: 15px; /* Это отодвинет текст от поля ввода и кнопки */
-    color: #817d7d; 
+.sub-title {
+    display: block;
+    margin-top: 15px;
+    color: #817d7d;
     font-size: 0.8em;
 }
 
+/* Input */
 input {
-    width: 65%;
+    width: 100%;
+    max-width: 450px;
     padding: 15px;
     border-radius: 8px;
     border: 1px solid #333;
     background: #0f0f12;
     color: white;
-    margin-right: 5px;
     outline: none;
+    box-sizing: border-box;
 }
 
-/* Кнопка */
+/* Button */
 button {
+    width: 100%;
+    max-width: 450px;
+    margin-top: 10px;
     padding: 15px 25px;
     border-radius: 8px;
     border: none;
@@ -115,52 +131,34 @@ button {
     transition: 0.3s;
 }
 
-button:hover { 
-    opacity: 0.9; 
+button:hover {
+    opacity: 0.9;
 }
 
-/* Футер */
-footer { 
+/* Footer */
+footer {
     padding: 35px 20px;
-    text-align: center; 
-    font-size: 0.8em; 
-    color: #666; 
+    text-align: center;
+    font-size: 0.8em;
+    color: #666;
 }
 
-.footer-links a { 
-    color: #888; 
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.footer-links a {
+    color: #888;
     text-decoration: none;
-    margin: 0 5px; 
 }
 
-/* How to download */
-.examples-section {
-    margin-top: 30px;
-    padding: 20px;
-    background: #1e1e24;
-    border-radius: 12px;
-    font-size: 0.9em;
-    text-align: left;
-    margin-left: 30px;
-}
-
-.examples-section p {
-    color: #fff;
-    margin-bottom: 10px;
-}
-
-.examples-list {
-    color: #a0a0a0;
-    padding-left: 20px;
-    word-break: break-all;
-}
 /* Loader */
 .loader-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: rgba(15, 15, 18, 0.9);
     display: none;
     justify-content: center;
@@ -182,16 +180,66 @@ footer {
 
 .loader-overlay p {
     margin-top: 20px;
-    color: white;
     font-size: 18px;
-    font-weight: 500;
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Планшеты */
+@media (max-width: 768px) {
+
+    .navbar {
+        padding: 15px;
     }
-    to {
-        transform: rotate(360deg);
+
+    .menu {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    main {
+        align-items: flex-start;
+        padding-top: 30px;
+    }
+
+    .download-section {
+        width: calc(100% - 30px);
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+}
+
+/* Телефоны */
+@media (max-width: 480px) {
+
+    .download-section {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .sub-title {
+        font-size: 0.75rem;
+    }
+
+    .loader {
+        width: 55px;
+        height: 55px;
+    }
+
+    .loader-overlay p {
+        font-size: 16px;
+    }
+
+    footer {
+        padding: 20px 15px;
     }
 }
