@@ -61,49 +61,55 @@ document.addEventListener("DOMContentLoaded", () => {
     setLanguage(savedLang);
 
     document.getElementById("button-download").addEventListener("click", async () => {
-        const tiktokUrl = document.querySelector(".links-paste").value.trim();
+        const url = document.querySelector(".links-paste").value.trim();
 
-        if (!tiktokUrl) return;
+        if (!url) return;
 
-        document.getElementById("loader").style.display = "flex";
+        const loader = document.getElementById("loader");
+        loader.style.display = "flex";
 
         try {
-            const result = await API.getVideo(tiktokUrl);
+            let result;
 
-            console.log(result);
-
-            if (result.code === 0) {
-                const response = await fetch(
-                    `http://127.0.0.1:3000/download?url=${encodeURIComponent(tiktokUrl)}`
-                );
-
-                if (!response.ok) {
-                    throw new Error("Download failed");
-                }
-
-                const blob = await response.blob();
-
-                document.getElementById("loader").style.display = "none";
-
-                const downloadUrl = URL.createObjectURL(blob);
-
-                const a = document.createElement("a");
-                a.href = downloadUrl;
-                a.download = "tiktok-video.mp4";
-
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-
-                URL.revokeObjectURL(downloadUrl);
-            } else {
-                document.getElementById("loader").style.display = "none";
-                alert("Помилка отримання відео");
+            if (url.includes("instagram.com")) {
+                result = await InstagramAPI.getVideo(url);
             }
+            else if (url.includes("tiktok.com")) {
+                result = await TikTokAPI.getVideo(url);
+            }
+            else {
+                throw new Error("Підтримуються тільки TikTok та Instagram посилання");
+            }
+
+
+
+            const response = await fetch(
+                `http://127.0.0.1:3000/download?url=${encodeURIComponent(url)}`
+            );
+
+            if (!response.ok) {
+                throw new Error("Download failed");
+            }
+
+            const blob = await response.blob();
+
+            const downloadUrl = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = "video.mp4";
+
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            URL.revokeObjectURL(downloadUrl);
+
         } catch (error) {
-            document.getElementById("loader").style.display = "none";
             console.error(error);
-            alert("Сталася помилка");
+            alert(error.message || "Сталася помилка");
+        } finally {
+            loader.style.display = "none";
         }
     });
 });
