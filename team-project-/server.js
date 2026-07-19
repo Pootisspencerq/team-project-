@@ -64,34 +64,52 @@ app.get("/download", async (req, res) => {
                 });
             }
 
-            videoUrl = data[0]?.urls?.[0]?.url;
+            const media = data[0]?.urls?.[0];
 
-            if (!videoUrl) {
+            if (!media?.url) {
                 return res.status(400).json({
-                    error: "Video URL not found",
+                    error: "Media URL not found",
                     response: data
                 });
             }
 
-            fileName = "instagram-video.mp4";
-        }
+            videoUrl = media.url;
 
+            const ext = media.extension?.toLowerCase();
+
+            if (ext === "jpg" || ext === "jpeg") {
+                fileName = "instagram-photo.jpg";
+            } else if (ext === "png") {
+                fileName = "instagram-photo.png";
+            } else {
+                fileName = "instagram-video.mp4";
+            }
+        }
         // YouTube (Обычные видео и Shorts)
         else if (url.includes("youtube.com") || url.includes("youtu.be")) {
-            let videoId = url.trim();
-            
-            try {
-                const urlObj = new URL(videoId);
-                if (urlObj.hostname.includes("youtu.be")) {
-                    videoId = urlObj.pathname.slice(1);
-                } else if (urlObj.pathname.startsWith("/shorts/")) {
-                    videoId = urlObj.pathname.split("/")[2];
-                } else {
-                    videoId = urlObj.searchParams.get("v");
-                }
-            } catch (e) {
-                console.error("Ошибка парсинга URL YouTube:", e);
+            let videoId;
+
+        try {
+            const urlObj = new URL(url);
+
+            if (urlObj.hostname === "youtu.be") {
+                videoId = urlObj.pathname.substring(1);
+            } else if (urlObj.pathname.startsWith("/shorts/")) {
+                videoId = urlObj.pathname.split("/")[2];
+            } else {
+                videoId = urlObj.searchParams.get("v");
             }
+        } catch (err) {
+            return res.status(400).json({
+                error: "Invalid YouTube URL"
+            });
+        }
+
+        if (!videoId) {
+            return res.status(400).json({
+                error: "Could not extract YouTube video ID"
+            });
+        }
 
             const response = await axios.get(
                 `https://ytstream-download-youtube-videos.p.rapidapi.com/dl?id=${videoId}`,
@@ -158,26 +176,31 @@ app.get("/download", async (req, res) => {
             });
         }
 
-        const video = await axios({
+        const media = await axios({
             url: videoUrl,
             method: "GET",
             responseType: "stream"
         });
+
+        const contentType =
+            media.headers["content-type"] || "application/octet-stream";
 
         res.setHeader(
             "Content-Disposition",
             `attachment; filename="${fileName}"`
         );
 
-        if (fileName.endsWith(".png")) {
-            res.setHeader("Content-Type", "image/png");
-        } else if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
-            res.setHeader("Content-Type", "image/jpeg");
-        } else {
-            res.setHeader("Content-Type", "video/mp4");
-        }
+        res.setHeader("Content-Type", contentType);
 
-        video.data.pipe(res);
+
+
+        media.data.pipe(res);
+
+
+
+
+
+        
 
     } catch (error) {
         console.error("Download Error:");
