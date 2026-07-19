@@ -69,20 +69,19 @@ document.addEventListener("DOMContentLoaded", () => {
         loader.style.display = "flex";
 
         try {
-            let result;
-
-            if (url.includes("instagram.com")) {
-                result = await InstagramAPI.getVideo(url);
+            // Проверяем, что ссылка принадлежит поддерживаемым платформам
+            if (
+                !url.includes("instagram.com") &&
+                !url.includes("tiktok.com") &&
+                !url.includes("pinterest.com") &&
+                !url.includes("pin.it") &&
+                !url.includes("youtube.com") &&
+                !url.includes("youtu.be")
+            ) {
+                throw new Error("Поддерживаются только TikTok, Instagram, Pinterest и YouTube ссылки");
             }
-            else if (url.includes("tiktok.com")) {
-                result = await TikTokAPI.getVideo(url);
-            }
-            else {
-                throw new Error("Підтримуються тільки TikTok та Instagram посилання");
-            }
 
-
-
+            // Отправляем ссылку напрямую на ваш бэкенд-сервер, который всё скачает через API
             const response = await fetch(
                 `http://127.0.0.1:3000/download?url=${encodeURIComponent(url)}`
             );
@@ -92,12 +91,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const blob = await response.blob();
-
             const downloadUrl = URL.createObjectURL(blob);
 
             const a = document.createElement("a");
             a.href = downloadUrl;
-            a.download = "video.mp4";
+            a.download = "media-file";
 
             document.body.appendChild(a);
             a.click();
