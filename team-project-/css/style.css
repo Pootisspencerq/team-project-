@@ -243,3 +243,13 @@ footer {
         padding: 20px 15px;
     }
 }
+
+.examples-section {
+    border: 1px solid #333;
+    border-radius: 16px;
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 20px;
+    background: #1a1a24;
+}
