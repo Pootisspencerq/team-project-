@@ -253,3 +253,52 @@ footer {
     padding: 0px 20px;
     background: #1a1a24;
 }
+
+#nav-how-to:hover{
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+#nav-languages:hover{
+    transform: scale(1.1);
+    transition: 0.3s;
+}#nav-home:hover{
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+#back-link{
+    display: inline-block;
+    margin-top: 30px;
+    color: #3b82f6;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+#back-link:hover{
+    transition: 0.3s;
+    transform: scale(1.1);
+}
+
+#note-text{
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: #a0a0a0;
+    margin-bottom: -35px;
+}
+
+#examples-title {
+    background: linear-gradient(90deg, #657bfa, #8e4fcd, #ff3e9f);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display:flex;
+    justify-content: center;
+    font-size: 17px;
+    margin-top: 30px;
+}
+
+.examples-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
