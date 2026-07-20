@@ -141,61 +141,7 @@ app.get("/download", async (req, res) => {
             fileName = "youtube-video.mp4";
         }
 
-        // Pinterest (Видео или изображения)
-        else if (url.includes("pinterest.com") || url.includes("pin.it")) {
-            const response = await axios.get(
-                `https://pinterest-video-and-image-downloader.p.rapidapi.com/pinterest?url=${encodeURIComponent(url)}`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-rapidapi-host": "pinterest-video-and-image-downloader.p.rapidapi.com",
-                        "x-rapidapi-key": "50dd52e0b2msh675e82d018b5553p1eea82jsn588993dd9111"
-                    }
-                }
-            );
-
-            const data = response.data;
-            console.log("Pinterest response:", JSON.stringify(data, null, 2));
-
-            videoUrl = data.data?.url || data.data?.thumbnail || data.video || data.url || data.image;
-
-            if (!videoUrl) {
-                return res.status(400).json({
-                    error: "Media URL not found in Pinterest response",
-                    response: data
-                });
-            }
-
-            const isImage = data.type === "image" || videoUrl.includes(".png") || videoUrl.includes(".jpg");
-            fileName = isImage ? "pinterest-image.png" : "pinterest-video.mp4";
-        }
-
-        else {
-            return res.status(400).json({
-                error: "Unsupported URL"
-            });
-        }
-
-        const media = await axios({
-            url: videoUrl,
-            method: "GET",
-            responseType: "stream"
-        });
-
-        const contentType =
-            media.headers["content-type"] || "application/octet-stream";
-
-        res.setHeader(
-            "Content-Disposition",
-            `attachment; filename="${fileName}"`
-        );
-
-        res.setHeader("Content-Type", contentType);
-
-
-
-        media.data.pipe(res);
-
+        
 
 
 
