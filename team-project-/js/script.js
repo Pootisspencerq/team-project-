@@ -34,7 +34,6 @@ const translations = {
         "telegram":
             "Telegram-бот",
 
-
         // How to download
         "title-page":
             "Как скачать видео?",
@@ -102,7 +101,6 @@ const translations = {
         "telegram":
             "Telegram-бот",
 
-
         // How to download
         "title-page":
             "Як завантажити відео?",
@@ -153,7 +151,8 @@ const translations = {
         "description":
             "Paste your TikTok video link below to download without watermark",
 
-        "button-download": "Download",
+        "button-download":
+            "Download",
 
         "sub-title":
             "By clicking Download, you agree to our terms.",
@@ -169,7 +168,6 @@ const translations = {
 
         "telegram":
             "Telegram-bot",
-
 
         // How to download
         "title-page":
@@ -206,28 +204,40 @@ const translations = {
 };
 
 
+/* =========================
+   LANGUAGE
+========================= */
+
 function setLanguage(lang) {
-    for (let id in translations[lang]) {
-        const element = document.getElementById(id);
 
-        if (element) {
+    if (!translations[lang]) {
+        lang = "ru";
+    }
 
-            // Если в переводе есть HTML-теги
+    for (const id in translations[lang]) {
+
+        const element =
+            document.getElementById(id);
+
+        if (!element) continue;
+
+        const text =
+            translations[lang][id];
+
+        if (
+            text.includes("<strong>") ||
+            text.includes("<span>")
+        ) {
+            element.innerHTML = text;
+        } else {
+
             if (
-                translations[lang][id].includes("<strong>") ||
-                translations[lang][id].includes("<span>")
+                element.tagName === "LI" &&
+                element.querySelector("a")
             ) {
-                element.innerHTML = translations[lang][id];
+                element.querySelector("a").innerText = text;
             } else {
-
-                // Навигация
-                if (element.tagName === "LI" && element.querySelector("a")) {
-                    element.querySelector("a").innerText =
-                        translations[lang][id];
-                } else {
-                    element.innerText =
-                        translations[lang][id];
-                }
+                element.innerText = text;
             }
         }
     }
@@ -235,68 +245,169 @@ function setLanguage(lang) {
     localStorage.setItem("lang", lang);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const savedLang = localStorage.getItem("lang") || "ru";
-    setLanguage(savedLang);
 
-    document.getElementById("button-download").addEventListener("click", async () => {
-        const url = document.querySelector(".links-paste").value.trim();
+/* =========================
+   DOWNLOAD
+========================= */
 
-        if (!url) return;
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-        const loader = document.getElementById("loader");
-        loader.style.display = "flex";
+        const savedLang =
+            localStorage.getItem("lang") || "ru";
 
-        try {
-            if (
-                !url.includes("instagram.com") &&
-                !url.includes("tiktok.com") &&
-                !url.includes("pin.it") &&
-                !url.includes("youtube.com") &&
-                !url.includes("youtu.be")
-            ) {
-                throw new Error(
-                    "Поддерживаются только TikTok, Instagram и YouTube ссылки"
-                );
-            }
+        setLanguage(savedLang);
 
-            const response = await fetch(
-                `http://127.0.0.1:3000/download?url=${encodeURIComponent(url)}`
+
+        const downloadButton =
+            document.getElementById(
+                "button-download"
             );
 
-            if (!response.ok) {
-                throw new Error("Download failed");
-            }
+        const input =
+            document.querySelector(
+                ".links-paste"
+            );
 
-            const blob = await response.blob();
+        const loader =
+            document.getElementById(
+                "loader"
+            );
 
-            const contentType = response.headers.get("content-type");
 
-            let fileName = "download";
+        if (!downloadButton) {
 
-            if (contentType?.includes("image")) {
-                fileName += ".jpg";
-            } else if (contentType?.includes("video")) {
-                fileName += ".mp4";
-            }
+            console.error(
+                "Button #button-download not found"
+            );
 
-            const downloadUrl = URL.createObjectURL(blob);
-
-            const a = document.createElement("a");
-            a.href = downloadUrl;
-            a.download = fileName;
-
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-
-            URL.revokeObjectURL(downloadUrl);
-
-        } catch (error) {
-            console.error(error);
-            alert(error.message || "Сталася помилка");
-        } finally {
-            loader.style.display = "none";
+            return;
         }
-    });
-});
+
+
+        if (!input) {
+
+            console.error(
+                "Input .links-paste not found"
+            );
+
+            return;
+        }
+
+
+        downloadButton.addEventListener(
+            "click",
+            () => {
+
+                const url =
+                    input.value.trim();
+
+
+                if (!url) {
+
+                    alert(
+                        "Вставьте ссылку"
+                    );
+
+                    return;
+                }
+
+
+                const isSupported =
+                    url.includes(
+                        "instagram.com"
+                    ) ||
+                    url.includes(
+                        "tiktok.com"
+                    ) ||
+                    url.includes(
+                        "youtube.com"
+                    ) ||
+                    url.includes(
+                        "youtu.be"
+                    );
+
+
+                if (!isSupported) {
+
+                    alert(
+                        "Поддерживаются только TikTok, Instagram и YouTube ссылки"
+                    );
+
+                    return;
+                }
+
+
+                /*
+                 * Показываем loader
+                 */
+
+                if (loader) {
+
+                    loader.style.display =
+                        "flex";
+                }
+
+
+                /*
+                 * ВАЖНО:
+                 *
+                 * Не используем fetch()
+                 * Не используем blob()
+                 *
+                 * Браузер скачивает файл напрямую.
+                 */
+
+                const downloadUrl =
+                    `http://127.0.0.1:3000/download?url=${encodeURIComponent(
+                        url
+                    )}`;
+
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                link.href =
+                    downloadUrl;
+
+
+                link.download =
+                    "video.mp4";
+
+
+                document.body.appendChild(
+                    link
+                );
+
+
+                link.click();
+
+
+                link.remove();
+
+
+                /*
+                 * Loader убираем
+                 * через небольшую задержку
+                 */
+
+                setTimeout(
+                    () => {
+
+                        if (loader) {
+
+                            loader.style.display =
+                                "none";
+                        }
+
+                    },
+                    1500
+                );
+            }
+        );
+    }
+);
