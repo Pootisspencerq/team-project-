@@ -1,56 +1,135 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
     <title id="title-page">How to Download</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+
     <header>
         <nav class="navbar">
             <ul class="menu">
-                <li id="nav-home"><a href="index.html">Home</a></li>
-                <li id="nav-how-to"><a href="how-to-download.html">How to download</a></li>
+
+                <li id="nav-home">
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li id="nav-how-to">
+                    <a href="how-to-download.html">How to download</a>
+                </li>
+
                 <li class="lang-dropdown" id="nav-languages">
                     <a href="#">Languages ▾</a>
+
                     <ul class="dropdown-menu">
                         <li onclick="setLanguage('ru')">Русский</li>
                         <li onclick="setLanguage('uk')">Українська</li>
                         <li onclick="setLanguage('en')">English</li>
                     </ul>
                 </li>
+
             </ul>
         </nav>
     </header>
-    <main>
+
+
+    <main class="how-page">
+
         <div class="download-section">
-            <h1 id="how-to-h1">Как скачать видео?</h1>
-            
-            <div class="steps" style="text-align: left; margin-top: 30px;">
-                <p id="step-1"><strong>1. Выбери видео:</strong> Найди понравившееся видео в приложении TikTok.</p>
-                <p id="step-2"><strong>2. Скопируй ссылку:</strong> Нажми кнопку <span>Поделиться</span> (Share) и выбери Копировать ссылку (Copy Link).</p>
-                <p id="step-3"><strong>3. Вставь ссылку:</strong> Вернись на наш сайт и вставь ссылку в поле ввода на главной странице.</p>
-                <p id="step-4"><strong>4. Скачай:</strong> Нажми кнопку <span>Скачать</span> и выбери формат без водяного знака.</p>
+
+            <h1 id="how-to-h1">
+                Как скачать видео?
+            </h1>
+
+
+            <div class="steps">
+
+                <p id="step-1">
+                    <strong>1. Выбери видео:</strong>
+                    Найди понравившееся видео в приложении TikTok.
+                </p>
+
+                <p id="step-2">
+                    <strong>2. Скопируй ссылку:</strong>
+                    Нажми кнопку <span>Поделиться</span> (Share)
+                    и выбери Копировать ссылку (Copy Link).
+                </p>
+
+                <p id="step-3">
+                    <strong>3. Вставь ссылку:</strong>
+                    Вернись на наш сайт и вставь ссылку
+                    в поле ввода на главной странице.
+                </p>
+
+                <p id="step-4">
+                    <strong>4. Скачай:</strong>
+                    Нажми кнопку <span>Скачать</span>
+                    и выбери формат без водяного знака.
+                </p>
+
             </div>
 
-            <div style="margin-top: 40px; padding: 15px; background: #1e1e24; border-radius: 8px; font-size: 0.9em; color: #a0a0a0;">
-                <p id="note-text"><strong>Примечание:</strong> После того как ты вставишь ссылку, подожди 3-5 секунд, пока система обработает видео.</p>
+
+            <div class="note-box">
+
+                <p id="note-text">
+                    <strong>Примечание:</strong>
+                    После того как ты вставишь ссылку,
+                    подожди 3-5 секунд, пока система обработает видео.
+                </p>
+
             </div>
 
-            <br>
-            <a href="index.html" id="back-link" style="color: #3b82f6; text-decoration: none; font-weight: bold;">← Вернуться на главную</a>
+
+            <a href="index.html" id="back-link">
+                ← Вернуться на главную
+            </a>
+
         </div>
+
+
         <div class="examples-section">
-            <p id="examples-title"><strong>Примеры ссылок, которые можно использовать:</strong></p>
+
+            <p id="examples-title">
+                <strong>
+                    Примеры ссылок, которые можно использовать:
+                </strong>
+            </p>
+
+
             <ul class="examples-list">
-                <li>https://vm.tiktok.com/xxxxxxx/</li>
-                <li>https://www.tiktok.com/@user/video/1234567890123456789</li>
-                <li>https://m.tiktok.com/v/1234567890123456789.html</li>
-                <li>1234567890123456789</li>
-                <li id="other-formats">и другие форматы...</li>
+
+                <li>
+                    https://vm.tiktok.com/xxxxxxx/
+                </li>
+
+                <li>
+                    https://www.tiktok.com/@user/video/1234567890123456789
+                </li>
+
+                <li>
+                    https://m.tiktok.com/v/1234567890123456789.html
+                </li>
+
+                <li>
+                    1234567890123456789
+                </li>
+
+                <li id="other-formats">
+                    и другие форматы...
+                </li>
+
             </ul>
+
         </div>
+
     </main>
+
+
     <script src="js/script.js"></script>
+
 </body>
 </html>
