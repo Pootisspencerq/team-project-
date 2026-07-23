@@ -302,3 +302,51 @@ footer {
     flex-direction: column;
     gap: 4px;
 }
+
+.download-type {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+
+.instagram-link{
+    margin-right: 20px;
+    text-decoration: none;
+    color: #eec1ff;
+}
+
+.youtube-link{
+    text-decoration: none;
+    color: #ffd6d6;
+}
+
+.instagram-link:hover{
+    color: #e893ff;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.youtube-link:hover{
+    color: #ff8f8f;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.tiktok-link{
+    margin-right: 20px;
+    text-decoration: none;
+    background: linear-gradient(90deg, #b8c2fe, #a98ac8, #feb8db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.tiktok-link:hover{
+    background: linear-gradient(90deg, #657bfa, #8e4fcd, #ff3e9f);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
