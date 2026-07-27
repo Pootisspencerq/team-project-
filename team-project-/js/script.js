@@ -38,9 +38,6 @@ const translations = {
         "title-page":
             "Как скачать видео?",
 
-        "how-to-h1":
-            "Как скачать видео?",
-
         "step-1":
             "<strong>1. Выбери видео:</strong> Найди понравившееся видео в приложении TikTok.",
 
@@ -105,8 +102,6 @@ const translations = {
         "title-page":
             "Як завантажити відео?",
 
-        "how-to-h1":
-            "Як завантажити відео?",
 
         "step-1":
             "<strong>1. Обери відео:</strong> Знайди відео, яке тобі сподобалося, у застосунку TikTok.",
@@ -173,8 +168,6 @@ const translations = {
         "title-page":
             "How to Download a Video?",
 
-        "how-to-h1":
-            "How to download a video?",
 
         "step-1":
             "<strong>1. Choose a video:</strong> Find a video you like in the TikTok app.",
@@ -214,15 +207,15 @@ function setLanguage(lang) {
         lang = "ru";
     }
 
+    currentLanguage = lang;
+
     for (const id in translations[lang]) {
 
-        const element =
-            document.getElementById(id);
+        const element = document.getElementById(id);
 
         if (!element) continue;
 
-        const text =
-            translations[lang][id];
+        const text = translations[lang][id];
 
         if (
             text.includes("<strong>") ||
@@ -242,9 +235,10 @@ function setLanguage(lang) {
         }
     }
 
+    showGuide(currentGuide);
+
     localStorage.setItem("lang", lang);
 }
-
 
 /* =========================
    DOWNLOAD

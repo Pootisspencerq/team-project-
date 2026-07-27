@@ -1,135 +1,285 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8" />
     <title id="title-page">How to Download</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <header>
-        <nav class="navbar">
-            <ul class="menu">
+<header>
 
-                <li id="nav-home">
-                    <a href="index.html">Home</a>
-                </li>
+    <nav class="navbar">
+        <ul class="menu">
 
-                <li id="nav-how-to">
-                    <a href="how-to-download.html">How to download</a>
-                </li>
+            <li id="nav-home">
+                <a href="index.html">Home</a>
+            </li>
 
-                <li class="lang-dropdown" id="nav-languages">
-                    <a href="#">Languages ▾</a>
+            <li id="nav-how-to">
+                <a href="how-to-download.html">How to download</a>
+            </li>
 
-                    <ul class="dropdown-menu">
-                        <li onclick="setLanguage('ru')">Русский</li>
-                        <li onclick="setLanguage('uk')">Українська</li>
-                        <li onclick="setLanguage('en')">English</li>
-                    </ul>
-                </li>
+            <li class="lang-dropdown" id="nav-languages">
+                <a href="#">Languages ▾</a>
 
-            </ul>
-        </nav>
-    </header>
+                <ul class="dropdown-menu">
+                    <li onclick="setLanguage('ru')">Русский</li>
+                    <li onclick="setLanguage('uk')">Українська</li>
+                    <li onclick="setLanguage('en')">English</li>
+                </ul>
+            </li>
 
+        </ul>
+    </nav>
 
-    <main class="how-page">
+    <nav class="download-type">
+        <a href="#" class="tiktok-link" onclick="event.preventDefault(); showGuide('tiktok')">
+            TikTok
+        </a>
 
-        <div class="download-section">
+        <a href="#" class="instagram-link" onclick="showGuide('instagram'); showGuide('instagram')">
+            Instagram
+        </a>
 
-            <h1 id="how-to-h1">
-                Как скачать видео?
-            </h1>
+        <a href="#" class="youtube-link" onclick="showGuide('youtube'); showGuide('youtube')">
+            YouTube
+        </a>
+    </nav>
 
+</header>
 
-            <div class="steps">
+<main>
 
-                <p id="step-1">
-                    <strong>1. Выбери видео:</strong>
-                    Найди понравившееся видео в приложении TikTok.
-                </p>
+    <div class="download-section">
 
-                <p id="step-2">
-                    <strong>2. Скопируй ссылку:</strong>
-                    Нажми кнопку <span>Поделиться</span> (Share)
-                    и выбери Копировать ссылку (Copy Link).
-                </p>
+        <h1 id="how-to-h1">
+            Как скачать видео?
+        </h1>
 
-                <p id="step-3">
-                    <strong>3. Вставь ссылку:</strong>
-                    Вернись на наш сайт и вставь ссылку
-                    в поле ввода на главной странице.
-                </p>
+        <div class="steps">
 
-                <p id="step-4">
-                    <strong>4. Скачай:</strong>
-                    Нажми кнопку <span>Скачать</span>
-                    и выбери формат без водяного знака.
-                </p>
+            <p id="step-1"></p>
 
-            </div>
+            <p id="step-2"></p>
 
+            <p id="step-3"></p>
 
-            <div class="note-box">
-
-                <p id="note-text">
-                    <strong>Примечание:</strong>
-                    После того как ты вставишь ссылку,
-                    подожди 3-5 секунд, пока система обработает видео.
-                </p>
-
-            </div>
-
-
-            <a href="index.html" id="back-link">
-                ← Вернуться на главную
-            </a>
+            <p id="step-4"></p>
 
         </div>
 
+        <a href="index.html" id="back-link">
+            ← Вернуться на главную
+        </a>
 
-        <div class="examples-section">
-
-            <p id="examples-title">
-                <strong>
-                    Примеры ссылок, которые можно использовать:
-                </strong>
+        <div class="note-box">
+            <p id="note-text">
+                <strong>Примечание:</strong>
+                После того как ты вставишь ссылку,
+                подожди 3–5 секунд, пока система обработает видео.
             </p>
-
-
-            <ul class="examples-list">
-
-                <li>
-                    https://vm.tiktok.com/xxxxxxx/
-                </li>
-
-                <li>
-                    https://www.tiktok.com/@user/video/1234567890123456789
-                </li>
-
-                <li>
-                    https://m.tiktok.com/v/1234567890123456789.html
-                </li>
-
-                <li>
-                    1234567890123456789
-                </li>
-
-                <li id="other-formats">
-                    и другие форматы...
-                </li>
-
-            </ul>
-
         </div>
 
-    </main>
+    </div>
 
+    <div class="examples-section">
 
-    <script src="js/script.js"></script>
+        <p id="examples-title">
+            <strong>
+                Примеры ссылок, которые можно использовать:
+            </strong>
+        </p>
+
+        <ul class="examples-list" id="examples-list">
+        </ul>
+
+    </div>
+
+</main>
+
+<script>
+let currentLanguage = "ru";
+
+const guides = {
+
+    tiktok: {
+
+        ru: {
+            title: "Как скачать видео из TikTok?",
+            step1: "<strong>1. Выбери видео:</strong> Найди понравившееся видео в приложении TikTok.",
+            step2: "<strong>2. Скопируй ссылку:</strong> Нажми кнопку <span>Поделиться</span> (Share) и выбери Копировать ссылку (Copy Link).",
+            step3: "<strong>3. Вставь ссылку:</strong> Вернись на наш сайт и вставь ссылку в поле ввода на главной странице.",
+            step4: "<strong>4. Скачай:</strong> Нажми кнопку <span>Скачать</span> и выбери формат без водяного знака.",
+            examples: [
+                "https://vm.tiktok.com/xxxxxxx/",
+                "https://www.tiktok.com/@user/video/1234567890123456789",
+                "https://m.tiktok.com/v/1234567890123456789.html",
+                "1234567890123456789",
+                "и другие форматы..."
+            ]
+        },
+
+        uk: {
+            title: "Як завантажити відео з TikTok?",
+            step1: "<strong>1. Обери відео:</strong> Знайди потрібне відео у TikTok.",
+            step2: "<strong>2. Скопіюй посилання:</strong> Натисни Поділитися та обери Копіювати посилання.",
+            step3: "<strong>3. Встав посилання:</strong> Повернися на сайт та встав його у поле вводу.",
+            step4: "<strong>4. Завантаж:</strong> Натисни кнопку Завантажити.",
+            examples: [
+                "https://vm.tiktok.com/xxxxxxx/",
+                "https://www.tiktok.com/@user/video/1234567890123456789",
+                "https://m.tiktok.com/v/1234567890123456789.html",
+                "1234567890123456789",
+                "та інші формати..."
+            ]
+        },
+
+        en: {
+            title: "How to Download TikTok Videos?",
+            step1: "<strong>1. Choose a video:</strong> Find a video in TikTok.",
+            step2: "<strong>2. Copy the link:</strong> Press Share and choose Copy Link.",
+            step3: "<strong>3. Paste the link:</strong> Return to our site and paste the link.",
+            step4: "<strong>4. Download:</strong> Press Download and choose a format.",
+            examples: [
+                "https://vm.tiktok.com/xxxxxxx/",
+                "https://www.tiktok.com/@user/video/1234567890123456789",
+                "https://m.tiktok.com/v/1234567890123456789.html",
+                "1234567890123456789",
+                "and other formats..."
+            ]
+        }
+    },                 
+
+ instagram: {
+
+    ru: {
+        title: "Как скачать видео из Instagram?",
+        step1: "<strong>1. Выбери видео:</strong> Найди понравившееся видео в Instagram.",
+        step2: "<strong>2. Скопируй ссылку:</strong> Нажми Поделиться и выбери Копировать ссылку.",
+        step3: "<strong>3. Вставь ссылку:</strong> Вернись на сайт и вставь её.",
+        step4: "<strong>4. Скачай:</strong> Нажми Скачать.",
+        examples: [
+            "https://www.instagram.com/reel/xxxxxx",
+            "https://www.instagram.com/stories/user/xxxxxx",
+            "https://m.instagram.com/reel/xxxxxx",
+            "https://www.instagram.com/p/xxxxxx",
+            "и другие форматы..."
+        ]
+    },
+
+    uk: {
+        title: "Як завантажити відео з Instagram?",
+        step1: "<strong>1. Обери відео:</strong> Знайди потрібне відео в Instagram.",
+        step2: "<strong>2. Скопіюй посилання:</strong> Натисни Поділитися та Копіювати посилання.",
+        step3: "<strong>3. Встав посилання:</strong> Повернися на сайт та встав його.",
+        step4: "<strong>4. Завантаж:</strong> Натисни Завантажити.",
+        examples: [
+            "https://www.instagram.com/reel/xxxxxx",
+            "https://www.instagram.com/stories/user/xxxxxx",
+            "https://m.instagram.com/reel/xxxxxx",
+            "https://www.instagram.com/p/xxxxxx",
+            "та інші формати..."
+        ]
+    },
+
+    en: {
+        title: "How to Download Instagram Videos?",
+        step1: "<strong>1. Choose a video:</strong> Find a video in Instagram.",
+        step2: "<strong>2. Copy the link:</strong> Use Share → Copy Link.",
+        step3: "<strong>3. Paste the link:</strong> Return to the site and paste it.",
+        step4: "<strong>4. Download:</strong> Press Download.",
+        examples: [
+            "https://www.instagram.com/reel/xxxxxx",
+            "https://www.instagram.com/stories/user/xxxxxx",
+            "https://m.instagram.com/reel/xxxxxx",
+            "https://www.instagram.com/p/xxxxxx",
+            "and other formats..."
+        ]
+    }
+},
+
+    youtube: {
+
+    ru: {
+        title: "Как скачать видео с YouTube?",
+        step1: "<strong>1. Выбери видео:</strong> Найди нужное видео на YouTube.",
+        step2: "<strong>2. Скопируй ссылку:</strong> Нажми Поделиться → Копировать ссылку.",
+        step3: "<strong>3. Вставь ссылку:</strong> Вернись на сайт и вставь её.",
+        step4: "<strong>4. Скачай:</strong> Нажми Скачать.",
+        examples: [
+            "https://youtu.be/xxxxx",
+            "https://youtube.com/shorts/xxxxx",
+            "https://www.youtube.com/watch?v=xxxxx",
+            "и другие форматы..."
+        ]
+    },
+
+    uk: {
+        title: "Як завантажити відео з YouTube?",
+        step1: "<strong>1. Обери відео:</strong> Знайди потрібне відео на YouTube.",
+        step2: "<strong>2. Скопіюй посилання:</strong> Натисни Поділитися → Копіювати посилання.",
+        step3: "<strong>3. Встав посилання:</strong> Повернися на сайт та встав його.",
+        step4: "<strong>4. Завантаж:</strong> Натисни Завантажити.",
+        examples: [
+            "https://youtu.be/xxxxx",
+            "https://youtube.com/shorts/xxxxx",
+            "https://www.youtube.com/watch?v=xxxxx",
+            "та інші формати..."
+        ]
+    },
+
+    en: {
+        title: "How to Download YouTube Videos?",
+        step1: "<strong>1. Choose a video:</strong> Find a video on YouTube.",
+        step2: "<strong>2. Copy the link:</strong> Press Share → Copy Link.",
+        step3: "<strong>3. Paste the link:</strong> Return to the site and paste it.",
+        step4: "<strong>4. Download:</strong> Press Download.",
+        examples: [
+            "https://youtu.be/xxxxx",
+            "https://youtube.com/shorts/xxxxx",
+            "https://www.youtube.com/watch?v=xxxxx",
+            "and other formats..."
+        ]
+    }
+}
+};
+
+let currentGuide = "tiktok";
+
+function showGuide(type) {
+
+    currentGuide = type;
+
+    const guide = guides[type][currentLanguage];
+
+    document.getElementById("how-to-h1").innerHTML = guide.title;
+    document.getElementById("step-1").innerHTML = guide.step1;
+    document.getElementById("step-2").innerHTML = guide.step2;
+    document.getElementById("step-3").innerHTML = guide.step3;
+    document.getElementById("step-4").innerHTML = guide.step4;
+
+    const list = document.getElementById("examples-list");
+    list.innerHTML = "";
+
+    guide.examples.forEach(example => {
+        const li = document.createElement("li");
+        li.textContent = example;
+        list.appendChild(li);
+    });
+}
+
+showGuide("tiktok");
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+    showGuide(currentGuide);
+}
+</script>
+
+<script src="js/script.js"></script>
 
 </body>
 </html>
