@@ -356,9 +356,7 @@ document.addEventListener(
                  */
 
                 const downloadUrl =
-                    `http://127.0.0.1:3000/download?url=${encodeURIComponent(
-                        url
-                    )}`;
+                    `${window.location.origin}/download?url=${encodeURIComponent(url)}`;
 
 
                 const link =
