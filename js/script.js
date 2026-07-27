@@ -235,7 +235,9 @@ function setLanguage(lang) {
         }
     }
 
+    if (typeof showGuide === "function") {
     showGuide(currentGuide);
+}
 
     localStorage.setItem("lang", lang);
 }
